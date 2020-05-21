@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="sidenav position-fixed col-3">
+        <h5 style="text-align: center; color: beige;">Todo's</h5>
+        <a data-toggle="modal" data-target="#exampleModal" style="cursor: pointer; color: cadetblue;">Create List</a>
+        <ul *ngFor="let list of allLists">
+            <li style="cursor: pointer;"><a (click)="getItemsOfList(list)">{{list.listName}}</a></li>
+        </ul>
+    </div>
+
+
+    <div class="main col-9 welcome" *ngIf="!selectedListName">
+        <p>Welcome!</p>
+        <p>Create A List OR</p>
+        <p>Select A List</p>
+    </div>
+
+    <!-- Page content -->
+    <div class="main col-9" *ngIf="selectedListName">
+        <div>
+            <span class="custom1" style="color: green;">List Name: &nbsp; {{selectedListName | titlecase}}</span>
+
+            <span class="ml-5 btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="fas fa-cog" style="font-size: 20px;"></i>
+                <!-- <i class="fas fa-ellipsis-v"></i> -->
+            </span>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item">Make it Public</a>
+                <a class="dropdown-item">Make it Private</a>
+                <a class="dropdown-item" style="color: red;" (click)="deleteListFunction()">Delete List</a>
+            </div>
+        </div>
+        <hr class="sep-2">
+        <div class="custom form__group field">
+            <input type="input" [(ngModel)]="enteredTaskName" class="form__field" placeholder="name" name="name"
+                id='name' required />
+            <label for="name" class="form__label">Add Task</label>
+            <div class="" style="text-align: center;margin-top:5%">
+                <button class="icon-btn add-btn" (click)="addTask()">
+                    <div class="add-icon"></div>
+                    <div class="btn-txt">Add</div>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="selectedListName" style="margin-top:2vh">
+            <div class="col-md-12">
+
+                <div *ngFor="let item of allItems">
+                    <div class="taskList">
+
+                        <div id="item">
+                            <div style="color: red;">Task: </div>
+                            <div style="margin-left: 35px;">
+                                <span [ngClass]="{'strikethrough':item.itemDone === 'yes'}">
+                                    {{item.itemName | titlecase}}
+                                </span>
+
+                                <span class="ml-5 btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </span>
+                                <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" *ngIf="item.itemDone == 'no'"
+                                        (click)="markAsDoneUndone(item.itemId,item.itemName,'yes')">Mark as Done</a>
+                                    <a class="dropdown-item" *ngIf="item.itemDone == 'yes'"
+                                        (click)="markAsDoneUndone(item.itemId,item.itemName,'no')">Mark as Undone</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal1"
+                                        (click)="selectedItemId=item.itemId;">Add Sub Task</a>
+                                    <a class="dropdown-item" style="color: red;" (click)="deleteItemFunction(item.itemId)">Delete Item</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="item" *ngFor="let subitem of item.subItems">
+                            <div style="color: red;">Sub Task: </div>
+                            <div style="margin-left: 65px;">
+                                <span [ngClass]="{'strikethrough':item.itemDone === 'yes'}">
+                                    {{subitem.subItemName | titlecase}}
+                                </span>
+
+                                <span class="ml-5 btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </span>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" *ngIf="item.itemDone == 'no'"
+                                        (click)="markAsDoneUndone(item.itemId,item.itemName,'yes')">Mark as Done</a>
+                                    <a class="dropdown-item" *ngIf="item.itemDone == 'yes'"
+                                        (click)="markAsDoneUndone(item.itemId,item.itemName,'no')">Mark as Undone</a>
+                                    <a class="dropdown-item" style="color: red;" (click)="deleteSubItemFunction(item.itemId,subitem.subItemId)">Delete Sub Item</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="sep-2">
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">List Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Enter List Name here" [(ngModel)]="enteredListName"
+                    name="enteredListName" style="border: none; padding: 10px; width: 100%;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addList()" data-dismiss="modal">Add List</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sub Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Enter Sub Task here" [(ngModel)]="enteredSubTaskName"
+                    name="enteredSubTaskName" style="border: none; padding: 10px; width: 100%;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addSubTask()" data-dismiss="modal">Add Sub Task</button>
+            </div>
+        </div>
+    </div>
+</div>

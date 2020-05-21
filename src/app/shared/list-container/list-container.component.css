@@ -1,0 +1,269 @@
+/* The sidebar menu */
+.sidenav {
+    height: 600px; /* Full-height: remove this if you want "auto" height */
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+
+  a {
+    cursor: pointer;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  /* Style page content */
+  .main {
+    padding: 10px 10px;
+    position: relative;
+    left: 310px;
+    overflow: hidden;
+  }
+  .strikethrough {
+    text-decoration: line-through;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+
+
+
+
+hr.sep-2 {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    #f0f0f0,
+    #00b9ff,
+    #59d941,
+    #f0f0f0
+  );
+}
+
+
+
+
+
+  .form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 50%;
+  }
+  
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.3rem;
+    color: black;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
+  .form__field::placeholder {
+    color: transparent;
+  }
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+  
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+  }
+  
+  .form__field:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #11998e, #38ef7d);
+    border-image-slice: 1;
+  }
+  .form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #11998e;
+    font-weight: 700;
+  }
+  
+  /* reset input */
+  .form__field:required, .form__field:invalid {
+    box-shadow: none;
+  }
+  
+  /* demo */
+  body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 1.5rem;
+    background-color: #222222;
+  }
+  
+
+
+
+
+
+  
+  .icon-btn {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+  }
+  .add-btn:hover {
+    width: 120px;
+  }
+  .add-btn::before,
+  .add-btn::after {
+    transition: width 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: 10px;
+    top: calc(50% - 2px);
+    background: red;
+  }
+  .add-btn::after {
+    right: 14px;
+    overflow: hidden;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+  .add-btn::before {
+    left: 14px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+  .icon-btn:focus {
+    outline: none;
+  }
+  .btn-txt {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .add-btn:hover::before,
+  .add-btn:hover::after {
+    width: 4px;
+    border-radius: 2px;
+  }
+  .add-btn:hover .btn-txt {
+    opacity: 1;
+  }
+  .add-icon::after,
+  .add-icon::before {
+    transition: all 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 2px;
+    top: calc(50% - 10px);
+    background: red;
+    overflow: hidden;
+  }
+  .add-icon::before {
+    left: 22px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+  .add-icon::after {
+    right: 22px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+  .add-btn:hover .add-icon::before {
+    left: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+  }
+  .add-btn:hover .add-icon::after {
+    right: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+  }
+  
+  .custom {
+      margin-left: 250px;
+  }
+
+  .custom1 {
+    padding-left: 350px;
+}
+
+  @media screen and (max-width: 576px) {
+    .custom {
+        margin-left: 100px;
+    }
+    .custom1 {
+        padding-left: 100px;
+    }
+    .main {
+      left: 120px;
+    }
+  }
+
+  @media screen and (min-width: 1100px) {
+    .main {
+      left: 320px;
+    }
+  }
+
+  @media screen and (max-width: 786px) {
+    .custom {
+        margin-left: 100px;
+    }
+    .custom1 {
+        padding-left: 100px;
+    }
+  }
+
+
+  .welcome p{
+    font-family: 'Bad Script', cursive;
+    font-size: 50px;
+    padding-left: 300px;
+    padding-top: 50px;
+  }
+
+
+  @media screen and (max-width: 826px) {
+    .welcome p{
+      padding-left: 30px;
+    }
+  }

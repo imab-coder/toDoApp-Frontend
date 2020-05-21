@@ -1,0 +1,28 @@
+.cards-p {
+    margin-left: 320px;
+}
+
+.box-card {
+  margin-bottom: 7px;
+}
+
+a {
+  cursor: pointer;
+}
+@media screen and (max-width: 576px) {
+    .cards-p {
+        margin-left: 150px;
+    }
+  }
+
+  @media screen and (max-width: 786px) {
+    .cards-p {
+        margin-left: 220px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .cards-p {
+        margin-left: 150px;
+    }
+  }
