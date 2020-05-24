@@ -31,17 +31,17 @@ export class MultiUserComponent implements OnInit {
     this.fullName = Cookie.get('fullName')
     this.authToken = Cookie.get('authToken');
     this.userId = Cookie.get('userId');
-    this.userInfo = this.appService.getUserInfoFromLocalStorage()
+    this.userInfo = this.appService.getLocalStorage()
     this.userFriendsTemp.push(this.userId)
 
     for (let x of this.userInfo.friends) {
       this.userFriendsTemp.push(x.friendId)
-      this.userFriends.push(x.friendId) 
+      this.userFriends.push(x.friendId)
     }
     this.verifyUserConfirmation()
 
     this.getUpdatesFromUser()
-    
+
     this.getAllPublicListFunction(this.userFriendsTemp)
 
   }
@@ -51,8 +51,8 @@ export class MultiUserComponent implements OnInit {
     this.socketService.verifyUser()
       .subscribe(() => {
         this.socketService.setUser(this.authToken);
-      },(err) => {
-        this.toastr.error(err,"Some error occured");
+      }, (err) => {
+        this.toastr.error(err, "Some error occured");
       })
   }//end verifyUserConfirmation
 
@@ -61,7 +61,7 @@ export class MultiUserComponent implements OnInit {
 
     this.socketService.getUpdatesFromUser(this.userId).subscribe((data) => {
       this.toastr.info(data.message);
-      if(!data.listId){
+      if (!data.listId) {
         this.getAllPublicListFunction(this.userFriendsTemp)
       }
     });
@@ -78,28 +78,27 @@ export class MultiUserComponent implements OnInit {
           for (let apiItem of apiResponse.data) {
             this.allLists.push(apiItem)
           }
-        }
-        else {
+        } else {
           this.toastr.info(apiResponse.message, "Update!");
           this.allLists.length = 0;
         }
-      },(err) => {
+      }, (err) => {
         this.toastr.error("Some Error Occurred", "Error!");
+        this.allLists.length = 0;
       });
-    }
-    else {
+    } else {
       this.toastr.info("Missing Authorization Key", "Please login again");
     }
 
   }//end getAllPublicListFunction
 
 
-  public getUpdatesFromContainer(data) {
+  getUpdatesFromContainer(data) {
 
     let dataForNotify = {
       message: data.message,
       userId: this.userFriends,
-      listId:data.listId
+      listId: data.listId
     }
     this.notifyUpdatesToUser(dataForNotify);
   }
@@ -107,9 +106,28 @@ export class MultiUserComponent implements OnInit {
 
   public notifyUpdatesToUser: any = (data) => {
     this.socketService.notifyUpdates(data);
-    if(!data.listId)
+    if (!data.listId)
       this.getAllPublicListFunction(this.userFriendsTemp)
   }//end notifyUpdatesToUser
+
+
+  public deleteUser = () => {
+    this.appService.deleteUser(this.userId, this.authToken).subscribe((apiResponse) => {
+      if(apiResponse.status === 200) {
+        this.toastr.success('Your Account is successfully deleted', 'Success!' )
+        Cookie.deleteAll()
+        setTimeout(() => {
+          this.router.navigate(['login'])
+          this.toastr.success('Hope You Back Again!', 'Thank you!')
+        })
+      }else {
+        this.toastr.error(apiResponse.message, 'Error!')
+      }
+    }, (err) => {
+      console.log(err)
+      this.toastr.error('failed to delete user', 'Error!')
+    })
+  }
 
 
 
@@ -125,9 +143,9 @@ export class MultiUserComponent implements OnInit {
           this.toastr.success(this.fullName.toUpperCase(), 'Logout Success! See You Again')
           this.router.navigate(['login']);
         } else {
-          this.toastr.error(apiResponse.message,"Error!")
+          this.toastr.error(apiResponse.message, "Error!")
         }
-      },(err) => {
+      }, (err) => {
         this.toastr.error("Some Error Occurred", "Error!");
       });
 

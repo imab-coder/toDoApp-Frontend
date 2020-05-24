@@ -46,7 +46,7 @@ export class ListContainerComponent implements OnInit {
     this.authToken = Cookie.get('authToken');
     this.userId = Cookie.get('userId');
     this.userName = Cookie.get('fullName');
-    this.userInfo = this.appService.getUserInfoFromLocalStorage()
+    this.userInfo = this.appService.getLocalStorage()
 
     this.getUpdatesFromUser()
   }
@@ -108,13 +108,10 @@ export class ListContainerComponent implements OnInit {
   public getAllItemFunction = () => {
 
     this.allItems = [];
-
     if (this.selectedListId != null && this.authToken != null) {
       this.appService.getAllItems(this.selectedListId, this.authToken).subscribe((apiResponse) => {
         if (apiResponse.status == 200) {
-
           this.allItems = apiResponse.data;
-
           let itemsDone = this.allItems.filter(item => item.itemDone == 'yes');
         } else {
           this.toastr.info(apiResponse.message, "Update!");
@@ -146,9 +143,7 @@ export class ListContainerComponent implements OnInit {
           let notifyData = {
             message: `${this.userName} has deleted a List named as ${this.selectedListName}`
           }
-
           this.notifyUserAboutList(notifyData);
-
           this.selectedListName = '';
         } else {
           this.toastr.error(apiResponse.message, 'Error!')
@@ -170,7 +165,6 @@ export class ListContainerComponent implements OnInit {
   }
 
   public addItemFunction(hasValue?: Boolean, gotData?: any): any {
-
     if (!this.selectedListId) {
       this.toastr.warning("List Id is required", "Warning!");
     }
@@ -178,7 +172,6 @@ export class ListContainerComponent implements OnInit {
       this.toastr.warning("Item Name is required", "Warning!");
     }
     else {
-
       let data: any = {}
       if (hasValue) {
         data = gotData
@@ -213,7 +206,6 @@ export class ListContainerComponent implements OnInit {
           }
 
           this.notifyUserAboutList(notifyData);
-
         }
         else {
           this.toastr.error(apiResponse.message, "Error!");
@@ -226,17 +218,11 @@ export class ListContainerComponent implements OnInit {
 
   public addHistoryFunction(data): any {
     this.appService.addHistory(data).subscribe((apiResponse) => {
-      if (apiResponse.status == 200) {
-        //console.log(apiResponse.data)
-      }
-    });//end calling addHistory
+    })
   }//end addHistoryFunction
 
   public getUpdatesFromUser = () => {
-
     this.socketService.getUpdatesFromUser(this.userId).subscribe((data) => {
-      //getting message from user.
-      //console.log(data)
       if (data.listId != undefined && data.listId == this.selectedListId) {
         this.getAllItemFunction()
       }
@@ -251,7 +237,6 @@ export class ListContainerComponent implements OnInit {
       this.subItemName = this.enteredSubTaskName
       this.addSubItemFunction();
       this.enteredSubTaskName = ''
-
     }
   }
 
@@ -259,7 +244,6 @@ export class ListContainerComponent implements OnInit {
   public addSubItemFunction(hasValue?: Boolean, gotData?: any): any {
 
     let data: any = {}
-
     if (hasValue) {
       data.itemId = this.selectedItemId
       data.subItemId = gotData.subItemId
@@ -268,7 +252,6 @@ export class ListContainerComponent implements OnInit {
       data.subItemCreatorName = gotData.subItemCreatorName
       data.subItemModifierId = this.userId
       data.subItemModifierName = this.userName
-
     } else {
       data = {
         itemId: this.selectedItemId,
@@ -280,7 +263,6 @@ export class ListContainerComponent implements OnInit {
         authToken: this.authToken
       }
     }
-    // data.authToken = this.authToken
     this.appService.addSubItem(data).subscribe((apiResponse) => {
       if (apiResponse.status == 200) {
         this.toastr.success("Sub Item Added Successfully", "Success");
@@ -295,7 +277,6 @@ export class ListContainerComponent implements OnInit {
           }
           this.addHistoryFunction(saveItem)
         }
-
         this.getAllItemFunction();
 
         let notifyData = {
@@ -303,7 +284,6 @@ export class ListContainerComponent implements OnInit {
           listId: this.selectedListId
         }
         this.notifyUserAboutList(notifyData);
-
       } else {
         this.toastr.error(apiResponse.message, "Error!");
       }
@@ -313,7 +293,6 @@ export class ListContainerComponent implements OnInit {
   }//end addSubItemFunction
 
   public markAsDoneUndone: any = (itemId, itemName, itemDone) => {
-
     this.updateItemFunction(false, null, itemId, itemName, itemDone)
   } // end markAsDoneUndone
 
@@ -321,7 +300,6 @@ export class ListContainerComponent implements OnInit {
   public updateItemFunction(hasValue?: Boolean, gotData?: any, itemId?: any, itemName?: any, itemDone?: any): any {
 
     let data: any = {}
-
     if (hasValue) {
       data = gotData
     } else {
@@ -352,13 +330,11 @@ export class ListContainerComponent implements OnInit {
           message: `${this.userName} has updated a item from list named as ${this.selectedListName}`,
           listId: this.selectedListId
         }
-
         this.notifyUserAboutList(notifyData);
       } else {
         this.toastr.error(apiResponse.message, "Error!");
       }
     }, (err) => {
-
       this.toastr.error("Failed to update Item, Some Error Occurred", "Error!");
     });
   }//end updateItemFunction
@@ -415,7 +391,6 @@ export class ListContainerComponent implements OnInit {
         subItemId: subItemId,
         authToken: this.authToken
       }
-
       if (!instructionFromHistory) {
         let saveItem: any = {
           listId: this.selectedListId,
@@ -424,7 +399,6 @@ export class ListContainerComponent implements OnInit {
           itemId: itemId,
           subItemId: subItemId
         }
-
         this.addHistoryFunction(saveItem)
       }
 
@@ -437,7 +411,6 @@ export class ListContainerComponent implements OnInit {
             message: `${this.userName} has deleted a sub item from list named as ${this.selectedListName}`,
             listId: this.selectedListId
           }
-
           this.notifyUserAboutList(notifyData);
         } else {
           this.toastr.error(apiResponse.message, "Error!");

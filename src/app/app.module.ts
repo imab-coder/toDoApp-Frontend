@@ -12,13 +12,15 @@ import { FriendsComponent } from './friends/friends.component';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SingleUserComponent,
     MultiUserComponent,
-    FriendsComponent
+    FriendsComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
     SharedModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 2500,
+      timeOut: 4000,
       positionClass: 'toast-top-right',
       preventDuplicates: false,
       enableHtml: true

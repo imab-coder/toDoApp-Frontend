@@ -8,16 +8,18 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SocketService {
 
-  public url = "http://localhost:3000";
+  public url = 'http://api.todoapps.online'
+
+  // public url = "http://localhost:3000";
   public socket;
 
-  constructor( public http: HttpClient ) {
+  constructor(public http: HttpClient) {
 
     this.socket = io(this.url)
   }
 
-   //events to be listen
-   public verifyUser = () => {
+  //events to be listen
+  public verifyUser = () => {
 
     return Observable.create((observer) => {
 
@@ -40,7 +42,7 @@ export class SocketService {
         observer.next(userList);
 
       });//end Socket
-  
+
     });//end observable
 
   }//end onlineUserList
@@ -60,53 +62,65 @@ export class SocketService {
   }//end disconnect
 
   public listenAuthError = () => {
+
     return Observable.create((observer) => {
+
       this.socket.on('auth-error', (data) => {
+
         observer.next(data);
+
       }); // end Socket
+
     }); // end Observable
+
   } // end listenAuthError
-    
+
   public getUpdatesFromUser = (userId) => {
+
     return Observable.create((observer) => {
+
       this.socket.on(userId, (data) => {
+
         observer.next(data);
+
       }); // end Socket
+
     }); // end Observable
+
   } // end getUpdatesFromUser
 
 
   //* Events that are emitted *//
 
 
-public setUser = (authToken) => {
+  public setUser = (authToken) => {
 
-  this.socket.emit('set-user', authToken);
+    this.socket.emit('set-user', authToken);
 
-} // end setUser
+  } // end setUser
 
 
-public notifyUpdates = (data) => {
+  public notifyUpdates = (data) => {
 
-  this.socket.emit('notify-updates', data);
+    this.socket.emit('notify-updates', data);
 
-}
+  }
 
-public notifyUpdatesItem = (data) => {
+  public notifyUpdatesItem = (data) => {
 
-  this.socket.emit('notify-updates-item', data);
+    this.socket.emit('notify-updates-item', data);
 
-}
+  }
 
-public exitSocket = () =>{
+  public exitSocket = () => {
 
-  this.socket.disconnect();
+    this.socket.disconnect();
 
-}// end exit socket
+  }// end exit socket
 
-public disconnectedSocket = () => {
+  public disconnectedSocket = () => {
 
     this.socket.emit("disconnect", "");//end Socket
 
-}//end disconnectedSocket
+  }//end disconnectedSocket
 }

@@ -5,6 +5,7 @@ import { SignupComponent } from './user-management/signup/signup.component';
 import { SingleUserComponent } from './single-user/single-user.component';
 import { MultiUserComponent } from './multi-user/multi-user.component';
 import { FriendsComponent } from './friends/friends.component';
+import { AboutComponent } from './about/about.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'single-user', component: SingleUserComponent},
   { path: 'multi-user', component: MultiUserComponent },
-  { path: 'friends', component: FriendsComponent }
+  { path: 'friends', component: FriendsComponent },
+  { path: 'profile', component: AboutComponent }
 ];
 
 @NgModule({

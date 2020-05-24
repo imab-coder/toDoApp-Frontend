@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           Cookie.set('fullName', `${apiResponse.data.userDetails.firstName} ${apiResponse.data.userDetails.lastName}`);
 
           this.fullName = Cookie.get('fullName')
-          this.appService.setUserInfoInLocalStorage(apiResponse.data.userDetails)
+          this.appService.setLocalStorage(apiResponse.data.userDetails)
           setTimeout(() => {
             this.toastr.success(this.fullName.toUpperCase(), 'Welcome!')
             this.router.navigate(['single-user'])

@@ -30,7 +30,7 @@ export class SingleUserComponent implements OnInit, OnDestroy {
     this.fullName = Cookie.get('fullName')
     this.authToken = Cookie.get('authToken');
     this.userId = Cookie.get('userId');
-    this.userInfo = this.appService.getUserInfoFromLocalStorage()
+    this.userInfo = this.appService.getLocalStorage()
     this.verifyUserConfirmation()
     this.getUpdatesFromUser()
     this.getAllListFunction()
@@ -74,6 +74,24 @@ export class SingleUserComponent implements OnInit, OnDestroy {
     }
 
   }//end getAllListFunction
+
+  public deleteUser = () => {
+    this.appService.deleteUser(this.userId, this.authToken).subscribe((apiResponse) => {
+      if(apiResponse.status === 200) {
+        this.toastr.success('Your Account is successfully deleted', 'Success!' )
+        Cookie.deleteAll()
+        setTimeout(() => {
+          this.router.navigate(['login'])
+          this.toastr.success('Hope You Back Again!', 'Thank you!')
+        })
+      }else {
+        this.toastr.error(apiResponse.message, 'Error!')
+      }
+    }, (err) => {
+      console.log(err)
+      this.toastr.error('failed to delete user', 'Error!')
+    })
+  }
 
   public logout = () => {
 

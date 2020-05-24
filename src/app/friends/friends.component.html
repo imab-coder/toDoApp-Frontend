@@ -18,9 +18,38 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <a class="nav-link disabled" tabindex="-1" aria-disabled="true">Hi, {{fullName | titlecase}}</a>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="logout()">Logout</button>
+
+            <div class="dropdown mr-5">
+                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hi, {{fullName | titlecase}}
+                </a>
+              
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" [routerLink]="['/profile']">View Profile</a>
+                  <a class="dropdown-item text-danger" data-toggle="modal" data-target="#exampleModal4">Delete Account</a>
+                  <div class="dropdown-divider"></div>
+                  <button class="btn btn-outline-success my-2 my-sm-0 ml-4" type="submit" (click)="logout()">Logout</button>
+                </div>
+              </div>
+              
+            <!-- <a class="nav-link disabled" tabindex="-1" aria-disabled="true">Hi, {{fullName | titlecase}}</a>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="logout()">Logout</button> -->
         </form>
     </div>
 </nav>
 <app-friends-list></app-friends-list>
+
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="deleteUser()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

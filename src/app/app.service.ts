@@ -8,7 +8,9 @@ import { Cookie } from 'ng2-cookies';
 })
 export class AppService {
 
-  public url = 'http://localhost:3000/api/v1'
+  public url = 'http://api.todoapps.online/api/v1'
+
+  // public url = 'http://localhost:3000/api/v1'
   public logoutUrl= `${this.url}/users/logout`;
 
 
@@ -41,11 +43,11 @@ export class AppService {
     return this.http.post(`${this.logoutUrl}/${Cookie.get('userId')}`, params)
   }
 
-  public setUserInfoInLocalStorage = (data) => {
+  public setLocalStorage = (data) => {
     localStorage.setItem('userInfo', JSON.stringify(data))
   }
 
-  public getUserInfoFromLocalStorage = () => {
+  public getLocalStorage = () => {
     return JSON.parse(localStorage.getItem('userInfo'));
   }//end getlocalstorage function
 
@@ -119,17 +121,6 @@ export class AppService {
       
     return this.http.post(`${this.url}/history/addHistory`, params);
   }//end addItem 
-
-  public getHistory(data): Observable<any>{
-    
-    const params = new HttpParams()
-      .set('listId', data.listId)
-      .set('authToken',data.authToken)
-
-    return this.http.post(`${this.url}/history/deleteHistory`, params);
-  }//end addItem 
-
-
 
   public addSubItem(data): Observable<any>{
     const params = new HttpParams()
@@ -216,7 +207,7 @@ export class AppService {
   }//end sendFriendRequest
 
 
-  public rejectFriendRequest(data): Observable<any>{
+  public deleteFriendRequest(data): Observable<any>{
 
     const params = new HttpParams()
       .set('senderId',data.senderId)
@@ -257,26 +248,17 @@ export class AppService {
   }//end sendFriendRequest
 
 
-  // public unfriendUser(data): Observable<any>{
-
-  //   const params = new HttpParams()
-  //     .set('senderId',data.senderId)
-  //     .set('senderName',data.senderName)
-  //     .set('recieverId',data.recieverId)
-  //     .set('recieverName',data.recieverName)
-  //     .set('authToken',data.authToken)
-      
-
-  //   return this.http.post(`${this.url}/friends/unfriend/user`, params);
-  // }//end sendFriendRequest
-
-
-
   public getAllUsers(authToken): Observable<any> {    
     return this.http.get(`${this.url}/users/view/all?authToken=${authToken}`);
   }//end getAllUsers function
 
-  public getUserDetails(userId,authToken): Observable<any> {    
+  public deleteUser(userId, authToken): Observable<any> {
+    const params = new HttpParams()
+      .set('authtoken', authToken)
+    return this.http.post(`${this.url}/users/${userId}/delete?authToken=${authToken}`,params)
+  }
+
+  public getSingleUserDetails(userId,authToken): Observable<any> {    
     return this.http.get(`${this.url}/users/${userId}/details?authToken=${authToken}`);
   }//end getUserDetails function
 
