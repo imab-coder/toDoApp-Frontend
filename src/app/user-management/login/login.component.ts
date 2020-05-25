@@ -61,6 +61,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  public goToForgotPass = () => {
+    this.router.navigate(['forgot-pass'])
+  }
+
   ngOnInit(): void {
   }
 

@@ -6,6 +6,7 @@ import { SingleUserComponent } from './single-user/single-user.component';
 import { MultiUserComponent } from './multi-user/multi-user.component';
 import { FriendsComponent } from './friends/friends.component';
 import { AboutComponent } from './about/about.component';
+import { ForgotPasswordComponent } from './user-management/forgot-password/forgot-password.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'single-user', component: SingleUserComponent},
   { path: 'multi-user', component: MultiUserComponent },
   { path: 'friends', component: FriendsComponent },
-  { path: 'profile', component: AboutComponent }
+  { path: 'profile', component: AboutComponent },
+  { path: 'forgot-pass', component: ForgotPasswordComponent}
 ];
 
 @NgModule({

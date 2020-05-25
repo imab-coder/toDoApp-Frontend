@@ -15,7 +15,7 @@
                     <input type="password" name="password" [(ngModel)]="password" class="form-control" id="exampleInputPassword1">
                   </div>
                   <button type="submit" class="btn btn-outline-primary btn btn-block" (click)="loginFunction()">Login</button>
-                  <a>Forgot Password?</a>
+                  <a (click)="goToForgotPass()">Forgot Password?</a>
                   <hr>
                   <button type="submit" class="btn btn-success btn btn-block" (click)="goToSignup()">Create Account</button>
                 </form>
