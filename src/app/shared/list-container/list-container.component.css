@@ -1,6 +1,6 @@
 /* The sidebar menu */
 .sidenav {
-    height: 600px; /* Full-height: remove this if you want "auto" height */
+    height: 700px; /* Full-height: remove this if you want "auto" height */
     background-color: #111; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
@@ -241,6 +241,12 @@ hr.sep-2 {
   @media screen and (min-width: 1100px) {
     .main {
       left: 320px;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .main {
+      left: 410px;
     }
   }
 
